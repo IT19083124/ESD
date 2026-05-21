@@ -1,0 +1,84 @@
+[System]
+Name='robot_navigation_fis'
+Type='mamdani'
+Version=2.0
+NumInputs=3
+NumOutputs=2
+NumRules=23
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='dist_front'
+Range=[0 5]
+NumMFs=4
+MF1='Very_Close':'trapmf',[0 0 0.3 0.6]
+MF2='Close':'trimf',[0.3 0.8 1.5]
+MF3='Medium':'trimf',[1 2 3]
+MF4='Far':'trapmf',[2.5 3.5 5 5]
+
+[Input2]
+Name='dist_left'
+Range=[0 5]
+NumMFs=4
+MF1='Very_Close':'trapmf',[0 0 0.3 0.7]
+MF2='Close':'trimf',[0.3 0.9 1.5]
+MF3='Medium':'trimf',[1 2 3.5]
+MF4='Far':'trapmf',[3 4 5 5]
+
+[Input3]
+Name='heading_err'
+Range=[-3.14159265358979 3.14159265358979]
+NumMFs=5
+MF1='Far_Left':'trapmf',[-3.14159265358979 -3.14159265358979 -1.5 -0.5]
+MF2='Left':'trimf',[-1.2 -0.5 -0.1]
+MF3='Straight':'trimf',[-0.2 0 0.2]
+MF4='Right':'trimf',[0.1 0.5 1.2]
+MF5='Far_Right':'trapmf',[0.5 1.5 3.14159265358979 3.14159265358979]
+
+[Output1]
+Name='linear_vel'
+Range=[0 0.8]
+NumMFs=4
+MF1='Stop':'trimf',[0 0 0.15]
+MF2='Slow':'trimf',[0 0.2 0.4]
+MF3='Medium':'trimf',[0.2 0.45 0.65]
+MF4='Fast':'trimf',[0.5 0.8 0.8]
+
+[Output2]
+Name='angular_vel'
+Range=[-2.5 2.5]
+NumMFs=5
+MF1='Hard_Left':'trimf',[-2.5 -2.5 -1.2]
+MF2='Left':'trimf',[-2 -0.8 -0.2]
+MF3='Straight':'trimf',[-0.3 0 0.3]
+MF4='Right':'trimf',[0.2 0.8 2]
+MF5='Hard_Right':'trimf',[1.2 2.5 2.5]
+
+[Rules]
+1 0 0, 1 1 (1) : 1
+1 0 0, 1 2 (1) : 1
+2 1 0, 1 1 (1) : 1
+2 2 0, 2 4 (1) : 1
+2 3 0, 2 4 (1) : 1
+2 4 0, 2 3 (1) : 1
+2 0 0, 2 4 (1) : 1
+3 1 0, 2 1 (1) : 1
+3 2 0, 2 3 (1) : 1
+3 3 1, 3 1 (1) : 1
+3 3 2, 3 2 (1) : 1
+3 3 3, 3 3 (1) : 1
+3 3 4, 3 4 (1) : 1
+3 3 5, 3 5 (1) : 1
+3 4 3, 3 3 (1) : 1
+4 4 1, 4 1 (1) : 1
+4 4 2, 4 2 (1) : 1
+4 4 3, 4 3 (1) : 1
+4 4 4, 4 4 (1) : 1
+4 4 5, 4 5 (1) : 1
+4 3 3, 3 3 (1) : 1
+4 2 3, 2 3 (1) : 1
+4 1 0, 2 1 (1) : 1
